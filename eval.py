@@ -27,7 +27,7 @@ import tensorflow as tf
 def f1(y_hat, y_true, THRESHOLD=0.5):
     '''
     y_hat是未经过sigmoid函数激活的
-    输出的f1为Marco-F1
+    输出的f1为Macro-F1
     '''
     epsilon = 1e-7
     y_hat = y_hat > THRESHOLD
@@ -44,7 +44,7 @@ def f1(y_hat, y_true, THRESHOLD=0.5):
 
     return np.mean(f1)
 
-# 计算Marco-F1
+# 计算Macro-F1
 y_t = np.array([])
 y_p = np.array([])
 for x, y in test_db:
