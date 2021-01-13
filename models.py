@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # @Time : 2020/12/20
-# @Author : Barbra
 # @File : models.py
 # @Software: PyCharm
 
 import tensorflow as tf
-from tensorflow import keras
-import mobilenet_v3_small
+from cfg import mobilenet_v3_small
+
 
 def my_mobilenet_v3():
     # 构建模型
@@ -20,7 +19,6 @@ def my_mobilenet_v3():
     ])
 
     return model
-
 
 if __name__ == '__main__':
     model = my_mobilenet_v3()

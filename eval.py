@@ -4,26 +4,32 @@
 # @Software : PyCharm
 # @Desc : 模型验证
 
+
 import tensorflow as tf
 from pandas import np
 
-from data import test_db
+import os
+from data.data import test_db
 from models import my_mobilenet_v3
-import settings
+from cfg import settings
+from keras import backend as K
 
 # 创建模型
 model = my_mobilenet_v3()
 # 加载参数
-model.load_weights(settings.MODEL_PATH)
+if os.path.exists(settings.MODEL_PATH+ '.index'):
+    print('-------------load the model-----------------')
+    model.load_weights(settings.MODEL_PATH)
+else:
+    print('false')
 # 编译模型
-model.compile(tf.keras.optimizers.Adam(settings.LEARNING_RATE), loss=tf.keras.losses.categorical_crossentropy,
+model.compile(tf.keras.optimizers.Adam(settings.LEARNING_RATE),
+              loss=tf.keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 # 测试集accuracy
 print('test', model.evaluate(test_db))
 
-import tensorflow as tf
-
-
+#定义Macro-F1计算函数
 def f1(y_hat, y_true, THRESHOLD=0.5):
     '''
     y_hat是未经过sigmoid函数激活的
@@ -64,7 +70,6 @@ for x, y in test_db:
 
 mf = f1(y_pred, y_true)
 print('F1 score:', mf)
-
 
 # 查看识别错误的数据
 for x, y in test_db:
